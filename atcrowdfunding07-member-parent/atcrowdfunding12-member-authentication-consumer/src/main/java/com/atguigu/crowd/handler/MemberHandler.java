@@ -32,7 +32,7 @@ public class MemberHandler {
 	
 	@Autowired
 	private MySQLRemoteService mySQLRemoteService;
-	
+
 	@RequestMapping("/auth/do/member/register")
 	public String register(MemberVO memberVO, ModelMap modelMap) {
 		 
@@ -80,9 +80,8 @@ public class MemberHandler {
 			modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, saveMemberResultEntity.getMessage());
 			return "member-reg";
 		}
-		
-		//return "member-login";
-		return "portal";
+		// 使用重定向避免刷新浏览器导致重新执行注册流程
+		return "redirect:/auth/member/to/login/page";
 	}
 	
 	@ResponseBody

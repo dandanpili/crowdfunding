@@ -1,7 +1,10 @@
 server:
   port: 4000
-spring:  application:    name: atguigu-crowd-auth
-  thymeleaf:    prefix: classpath:/templates/
+spring:
+  application:
+    name: atguigu-crowd-auth
+  thymeleaf:
+    prefix: classpath:/templates/
     suffix: .html
 eureka:
   client:
@@ -14,4 +17,6 @@ short:
     sign: 1
     skin: 1
     path: /codeNotice
-  
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
