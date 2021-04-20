@@ -19,7 +19,7 @@ public class MemberProviderHandler {
 	private MemberService memberService;
 	
 	@RequestMapping("/save/member/remote")
-	public ResultEntity<String> saveMember(@RequestBody MemberPO memberPO) {
+	public ResultEntity<String> saveMemberRemote(@RequestBody MemberPO memberPO) {
 		try {
 			memberService.saveMember(memberPO);
 			
