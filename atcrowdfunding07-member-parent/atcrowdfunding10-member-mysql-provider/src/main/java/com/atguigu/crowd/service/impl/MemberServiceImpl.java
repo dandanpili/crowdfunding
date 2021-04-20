@@ -36,6 +36,9 @@ public class MemberServiceImpl implements MemberService{
 		List<MemberPO> list = memberPOMapper.selectByExample(example);
 		
 		//5.获取结果,可能会报空指针异常
+		if (list == null || list.size() == 0) {
+			return null;
+		}
 		return list.get(0);
 	}
 
