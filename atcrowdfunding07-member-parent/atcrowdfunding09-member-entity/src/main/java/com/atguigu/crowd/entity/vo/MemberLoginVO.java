@@ -14,6 +14,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberLoginVO implements Serializable {
+
+    private static final long serialVersionID = 1L;
+
     private Integer id;
 
     private String username;
