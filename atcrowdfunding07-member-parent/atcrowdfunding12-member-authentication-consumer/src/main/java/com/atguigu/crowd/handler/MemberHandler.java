@@ -40,7 +40,7 @@ public class MemberHandler {
 	public String logout(HttpSession session) {
 
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:http://localhost/";
 	}
 
 	@RequestMapping("/auth/member/do/login")
@@ -127,7 +127,7 @@ public class MemberHandler {
 			return "member-reg";
 		}
 		// 使用重定向避免刷新浏览器导致重新执行注册流程
-		return "redirect:/auth/member/to/login/page";
+		return "redirect:http://localhost/auth/member/to/login/page";
 	}
 
 

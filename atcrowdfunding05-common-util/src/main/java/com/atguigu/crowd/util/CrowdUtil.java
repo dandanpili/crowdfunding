@@ -69,7 +69,6 @@ public class CrowdUtil {
 				ossClient.shutdown();
 			}
 		}
-
 	}
 
 //	public static void main(String[] args) throws FileNotFoundException {
@@ -238,8 +237,7 @@ public class CrowdUtil {
 			int signum = 1;
 			BigInteger bigInteger = new BigInteger(signum, output);
 			int radix = 16;
-			String encoded = bigInteger.toString(radix).toUpperCase();
-			return encoded;
+			return bigInteger.toString(radix).toUpperCase();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}

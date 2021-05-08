@@ -103,6 +103,11 @@
     values (#{id,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, #{itemPicPath,jdbcType=VARCHAR}
       )
   </insert>
+  <insert id="insertPathList">
+    insert into t_project_item_pic (projectid, item_pic_path)
+    values
+    <foreach collection="detailPicturePathList" item="detailPath" separator=",">(#{projectId},#{detailPath})</foreach>
+  </insert>
   <insert id="insertSelective" parameterType="com.atguigu.crowd.entity.po.ProjectItemPicPO" >
     insert into t_project_item_pic
     <trim prefix="(" suffix=")" suffixOverrides="," >
