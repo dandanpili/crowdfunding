@@ -40,7 +40,7 @@ public class MemberHandler {
 	public String logout(HttpSession session) {
 
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:http://localhost/";
 	}
 
 	@RequestMapping("/auth/member/do/login")
@@ -66,8 +66,9 @@ public class MemberHandler {
 		//2.比较密码
 		String userpswdDataBase = memberPO.getUserpswd();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		//若两个密码相等，matchResult为true
 		boolean matchResult = passwordEncoder.matches(userpswd, userpswdDataBase);
-		if (matchResult) {
+		if (!matchResult) {
 			modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_LOGIN_FAILED);
 			return "member-login";
 		}
@@ -75,7 +76,7 @@ public class MemberHandler {
 		//3.创建MemberLoginVO对象存入Session域
 		MemberLoginVO memberLoginVO = new MemberLoginVO(memberPO.getId(), memberPO.getUsername(), memberPO.getEmail());
 		session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER, memberLoginVO);
-		return "redirect:/auth/member/to/center/page";
+		return "redirect:http://localhost/auth/member/to/center/page";
 	}
 
 	@RequestMapping("/auth/do/member/register")
@@ -92,7 +93,7 @@ public class MemberHandler {
 		
 		if (ResultEntity.FAILED.equals(result)) {
 			modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, resultEntity.getMessage());
-			return "memeber-reg";
+			return "member-reg";
 		}
 		
 		String redisCode = resultEntity.getData();
@@ -126,9 +127,10 @@ public class MemberHandler {
 			return "member-reg";
 		}
 		// 使用重定向避免刷新浏览器导致重新执行注册流程
-		return "redirect:/auth/member/to/login/page";
+		return "redirect:http://localhost/auth/member/to/login/page";
 	}
-	
+
+
 	@ResponseBody
 	@RequestMapping("/auth/member/send/short/message.json")
 	public ResultEntity<String> sendMessage(@RequestParam("phoneNum") String phoneNum){

@@ -10,16 +10,12 @@ public class ResultEntity<T> {
 	
 	public static final String SUCCESS = "SUCCESS";
 	public static final String FAILED = "FAILED";
-	
 	//用来封装当前请求处理的结果是成功还是失败
 	private String result;
-	
 	//请求处理失败时返回的错误消息
 	private String message;
-	
 	//要返回的数据
 	private T data;
-
 	/**
 	 * 请求处理成功且不需要返回数据时使用的工具方法
 	 * @param <Type>

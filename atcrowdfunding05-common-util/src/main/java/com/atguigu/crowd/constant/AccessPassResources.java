@@ -1,5 +1,10 @@
 package com.atguigu.crowd.constant;
 
+import com.atguigu.crowd.util.CrowdUtil;
+import com.atguigu.crowd.util.ResultEntity;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,4 +62,17 @@ public class AccessPassResources {
         // 4.判断是否在集合中
         return STATIC_RES_SET.contains(firstLevelPath);
     }
+
+	public static void main(String[] args) throws FileNotFoundException {
+		FileInputStream fileInputStream = new FileInputStream("E:\\IDEA-Git-Repository\\crowdfunding-network\\atcrowdfunding05-common-util\\QQHeadImage.jpg");
+		ResultEntity<String> resultEntity = CrowdUtil.uploadFileToOss("http://oss-cn-hangzhou.aliyuncs.com",
+				"LTAI5tCBDijahktTozG7zQcG",
+				"dd23nlezw3j4mJJTM4WKUD3rAVqx0f",
+				fileInputStream,
+				"shaoruilin01",
+				"http://shaoruilin01.oss-cn-hangzhou.aliyuncs.com",
+				"QQHeadImage.jpg"
+		);
+		System.out.println(resultEntity);
+	}
 }

@@ -1,5 +1,6 @@
 package com.atguigu.crowd.api;
 
+import com.atguigu.crowd.entity.vo.ProjectVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,5 +16,9 @@ public interface MySQLRemoteService {
 	ResultEntity<MemberPO> getMemberPOByLoginAcctRemote(@RequestParam("loginacct") String loginacct);
 	
 	@RequestMapping("/save/member/remote")
-	public ResultEntity<String> saveMemberRemote(@RequestBody MemberPO memberPO);
+	ResultEntity<String> saveMemberRemote(@RequestBody MemberPO memberPO);
+
+	@RequestMapping("/save/project/vo/remote")
+	ResultEntity<String> saveProjectVORemote(@RequestBody ProjectVO projectVO, @RequestParam("memberId") Integer memberId);
+
 }

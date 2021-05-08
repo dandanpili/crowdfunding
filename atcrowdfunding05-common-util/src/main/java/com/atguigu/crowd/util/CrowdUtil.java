@@ -1,36 +1,91 @@
 package com.atguigu.crowd.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.HttpResponse;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.common.comm.ResponseMessage;
+import com.aliyun.oss.model.PutObjectResult;
 
 import com.atguigu.crowd.constant.CrowdConstant;
-import com.atguigu.crowd.exception.AccessForbiddenException;
-import com.atguigu.crowd.exception.LoginFailedException;
 
 
 /**
- * 尚筹网通用工具方法类
+ * 众筹网通用工具方法类
  * @author 邵瑞琳
  *
  */
 public class CrowdUtil {
-	
+
+	/**
+	 * 专门负责上传文件到OSS服务器的工具方法
+	 * @param endpoint			OSS参数
+	 * @param accessKeyId		OSS参数
+	 * @param accessKeySecret	OSS参数
+	 * @param inputStream		要上传的文件的输入流
+	 * @param bucketName		OSS参数
+	 * @param bucketDomain		OSS参数
+	 * @param originalName		要上传的文件的原始文件名
+	 * @return	包含上传结果以及上传的文件在OSS上的访问路径
+	 */
+	public static ResultEntity<String> uploadFileToOss(
+			String endpoint,
+			String accessKeyId,
+			String accessKeySecret,
+			InputStream inputStream,
+			String bucketName,
+			String bucketDomain,
+			String originalName) {
+		OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+		String folderName = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		String fileMainName = UUID.randomUUID().toString().replace("-", "");
+		String extensionName = originalName.substring(originalName.lastIndexOf("."));
+		String objectName = folderName + "/" + fileMainName + extensionName;
+		try {
+			PutObjectResult putObjectResult = ossClient.putObject(bucketName, objectName, inputStream);
+			ResponseMessage responseMessage = putObjectResult.getResponse();
+			if(responseMessage == null) {
+				String ossFileAccessPath = bucketDomain + "/" + objectName;
+				return ResultEntity.successWithData(ossFileAccessPath);
+			} else {
+				int statusCode = responseMessage.getStatusCode();
+				String errorMessage = responseMessage.getErrorResponseAsString();
+				return ResultEntity.failed("当前响应状态码="+statusCode+" 错误消息="+errorMessage);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultEntity.failed(e.getMessage());
+		} finally {
+			if(ossClient != null) {
+				ossClient.shutdown();
+			}
+		}
+	}
+
+//	public static void main(String[] args) throws FileNotFoundException {
+////		System.out.println("hello");
+//		FileInputStream fileInputStream = new FileInputStream("E:\\IDEA-Git-Repository\\crowdfunding-network\\atcrowdfunding05-common-util\\QQHeadImage.jpg");
+//		ResultEntity<String> resultEntity = uploadFileToOss("http://oss-cn-hangzhou.aliyuncs.com",
+//				"LTAI5tCBDijahktTozG7zQcG",
+//				"dd23nlezw3j4mJJTM4WKUD3rAVqx0f",
+//				fileInputStream,
+//				"shaoruilin01",
+//				"http://shaoruilin01.oss-cn-hangzhou.aliyuncs.com",
+//				"QQHeadImage.jpg"
+//		);
+//		System.out.println(resultEntity);
+//	}
+
+
 	public static ResultEntity<String> sendCodeByShortMessageTwo(
 			String phone,
 			String appcode,
@@ -81,8 +136,8 @@ public class CrowdUtil {
 	
 	/**
 	 * 给远程第三方短信接口发送请求把验证码发送到用户手机上
-	 * @param phoneNum	接收验证码的手机号
-	 * @param appCode	用来调用第三方短信API的AppCode
+	 * @param phone	接收验证码的手机号
+	 * @param appcode	用来调用第三方短信API的AppCode
 	 * @param sign	签名编号
 	 * @param skin	模板编号
 	 * @param host	短信接口调用的URL地址
@@ -171,37 +226,21 @@ public class CrowdUtil {
 	 * @return 加密结果
 	 */
 	public static String md5(String source) {
-		
-		//1.判断source是否有效
 		if(source == null || source.length() == 0) {
-			//2.如果不是有效字符串就抛出异常
 			throw new RuntimeException(CrowdConstant.MESSAGE_STRING_INVALIDATE);
 		}
 		try {
-			//3.获取MessageDigest对象
 			String algorithm = "md5";
-			
 			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-			
-			//4.获取明文字符串对应的字节数组
 			byte[] input = source.getBytes();
-			
-			//5.执行加密
 			byte[] output = messageDigest.digest(input);
-			
-			//6.创建BigInteger对象
 			int signum = 1;
 			BigInteger bigInteger = new BigInteger(signum, output);
-			
-			//7.按照16进制将bigInteger的值转换为字符串
 			int radix = 16;
-			String encoded = bigInteger.toString(radix).toUpperCase();
-			
-			return encoded;
+			return bigInteger.toString(radix).toUpperCase();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 	

@@ -42,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<!-- 数据库表名字和我们的 entity 类对应的映射指定 -->
-		<table tableName="t_member" domainObjectName="MemberPO" />
+		<table tableName="t_member_launch_info" domainObjectName="MemberLaunchInfoPO" />
+		<table tableName="t_member_confirm_info" domainObjectName="MemberConfirmInfoPO" />
 	</context>
 </generatorConfiguration>
