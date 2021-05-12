@@ -24,6 +24,9 @@ zuul:
     crowd-pay:
       service-id: atguigu-crowd-pay
       path: /pay/**
+    crowd-order:
+      service-id: atguigu-crowd-order
+      path: /order/**
 ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
