@@ -1,0 +1,28 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: atguigu-crowd-pay
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.197.128
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+ali:
+  pay:
+    alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAip4bLez9qod4ywDOmgae6dp0SVQwaGldvcSajSvbq9gjGgwP2KPvXP8cmfpbwn5flxYd2EPAp7ePStcXFTYJYf2R1pZNnEEQ0PdZCZS+QXoqyEJQ67yxMesr3zLv0LzlngNjkVhrzjtf9LW57eIqAuMpRiIb/LYYlN0VVMP0Oc9ckNVzjcMTKu8cIVX78pJaTVdN/15OiyqkQPe2kUCH2fw2+72T3nFW8ImSeTaBZYuBoGsC560TJDUuGjQAFhC8TT5beEMqpXGi8KmapD81pu30u6awYa0pi9VloucaGh8T+uVa5sWRESU9JWHv1skEg90Yg+IfTckkPsH7uVMSFQIDAQAB
+    app-id: 2021000117650776
+    charset: utf-8
+    gateway-url: https://openapi.alipaydev.com/gateway.do
+    merchant-private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCFa6bfXry4r1/9g4ybrQZDPolRQ44fcV3bk0K/vW3e4dBYJcC0zDknkM3uFOtlmWJGaeQj51SffZLx08/auOjxSWBqTf4L6aLnL3yIOp0r6pEVEnbVVIMijrsopy3XneynpAA2d98Ad8soqajezxJPrr1+XiJJVxoY3tFVcCAvGNSiOvzaki4eF5rml3H3iRtiDjMxZ6JTIli64oP+Zuc5x1FcSXPtuS6L9Q6SisBBgKYk9ZNu1WQb9gX6SgNxk6Qp0Mt/ZMyFidZlx8pt1JSI1ZpaXwoxDAhZk2u3jkY36BZOAKt/Ykoeoq5xJ21J8MKBHknVNgxhqy9ZlZuiOLKFAgMBAAECggEADPbI4Ct0av2fdiKyJu5JDX+mGB9YT/XUCOHmOntNkbqfY/FHKEovw4huehPOS7D7u5vOby6rKlQpUxYhvD77Y3adx7aMWNv62Dvk/de0LfA86K9CnLf5hgIYbXrRGYJe3GszGhfLs1/wfaL+pae5P8Ta5MyAyF+OSZxc+tBKUEkT12b1Um9za3sD2HomYHIA/YzPNxjEYBj76pKyJyR/9srhyFI5+1nK90AVxWV2pgohnL+tvzx4b8569csfn7TdIHqA5PQcrVmCPWIPB4PdNp3TQSjjyb464MxmOiBvHQxldv0H4L35wnw487lQvWIE6bzkKmcRBjOPMc0QlyrWgQKBgQD5P3dxySXDeSaXJPaYdeiTg743g+pxun/ThkfOCVsr2RJZv6nig8JLtXpICpIhKwpR2/WvAB6FOTlJ2v7E4LBy7y6rheJMKJZ+m/x3UKqBDAyhG4hpnPpaztYq96XM0gvh5m5783gjecYYB2/MsNhT7H27DmTlCAOlN5o+fG9UgwKBgQCJCOwykd/1yGGaxZF1YcXHkJJdShzjsng6cw1VuPWTsAeY7iaNAkE+xpkgXGyPMCjV8C8RgFBKc9N1MliIvmAagG/mG2YiZRBN3Or8icBmCn32tqGvRDqob25/hcA5LXALGkjnmIstDsB4LxfuKGv1Lu0vSZTgECS/8ojGdwP+VwKBgQDXKAc2zRlxNNqwLHNGRroe5OHF0HUH+aMweEDxxbfTEQ47NS00YOLPMfg9ygo84YeGBGd/yo2OGUivzYCReRg4DuptnCQt8/d9ka+NW6/juAAK7taBvMWMr/HGo4KXXVZuidkj3Jb/oLX0ti63No13XLVoTNOhtZpX+7iFais8ewKBgFvY5SdH6sp8Eh+AiGwaqkuGNPPeNtrOxhK3BpsMK11fwNfZ13Dvr/d5eSzdhc27Q8ORBps+W5Jra7HDmt+caiGZMGcUujIXdwQZLE8zrQc3xRHVey1UF9TJS1ChvyMTt2NZrL+92JrMpmhneCyiXymo2ES3ltdPOrKExvPu1XhlAoGARmzPaPdvkAvVgjWdKEKlZkOUBQ0PrRJlThB45DuXwSbS/IjdifGAVL9VeBRAJjAiNkMnyd6mpRpHLahkzGGb/lM5IZ3/5cgfYFLak0Mbl19TfwyYSNDVEk9qK/CvxNtdZYUQqGHU3w9u521bp1r4mfL4epabu+uGkNMsrhirnyc=
+    notify-url: http://localhost/alipay/notify_url.jsp
+    return-url: http://localhost/pay/return
+    sign-type: RSA2
